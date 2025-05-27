@@ -90,8 +90,11 @@ with depthai.Device(pipeline) as device:
             if detector_result:
                 for i, marker in enumerate(detector_result):
                     print(f'\t\tID {marker.segment_in_image.ID}')
-                    print(f'{i}\t\tin image x:{marker.segment_in_image.x}, y:{marker.segment_in_image.y}')
-                    print(f'\t\tin space x:{marker.coords.x}, y:{marker.coords.y}, z:{marker.coords.z}, d:{marker.coords.angle}')
+                    to_round = [marker.segment_in_image.x, marker.segment_in_image.y, marker.coords.x,
+                                marker.coords.y, marker.coords.z, marker.coords.angle]
+                    to_print = [round(x, 3) for x in to_round]
+                    print('{}\t\tin image x:{}, y:{}'.format(i, *to_print[:2]))
+                    print('\t\tin space x:{}, y:{}, z:{}, \u03B1:{}'.format(*to_print[2:]))
             window.swow(img_array)
             delta_time = stop_time - start_time
             t_sum += delta_time
