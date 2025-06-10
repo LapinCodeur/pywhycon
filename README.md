@@ -1,14 +1,9 @@
-**I no longer support this project.**
-    
-**See the installation notes from [Andrew123098](https://github.com/ivomarvan/pywhycon/issues/2).**
-
-<hr>
-
 # pywhycon ![Whycon tag with ID](./whycon-code.jpg)
 
-Python wrapper for Whycon.
+Python wrapper for Whycon. This is a forked of [pywhycon](https://github.com/ivomarvan/pywhycon).
+I forked the project to add the modification from [Andrew123098](https://github.com/ivomarvan/pywhycon/issues/2) and update the [core](https://github.com/ivomarvan/whycon_core) with some of the update from the original [repository](https://github.com/jiriUlr/whycon-ros).
 
-### Whycon is precise, efficient and low-cost localization system 
+## Whycon is precise, efficient and low-cost localization system
 
 _WhyCon_ is a version of a vision-based localization system that can be used with low-cost web cameras, and achieves millimiter precision with very high performance.
 The system is capable of efficient real-time detection and precise position estimation of several circular markers in a video stream. 
@@ -16,91 +11,98 @@ It can be used both off-line, as a source of ground-truth for robotics experimen
 _WhyCon_ is meant as an alternative to widely used and expensive localization systems. It is fully open-source.
 _WhyCon-orig_ is WhyCon's original, minimalistic version that was supposed to be ROS and openCV independent.
 
+## Dependencies
 
-### <a name="dependencies">Dependencies</a>
+- **OpenCV**
+- **Whycon Core library** - see bellow
+- **pkconfig** - only for module building
+- **pybind11** - only for module building
+- **numpy**
 
-* <b>OpenCV</b>
-* <b>Whycon Core library</b> - see bellow
-* <b>pkconfig</b> - only for module building
-* <b>pybind11</b> - only for module building
-* <b>numpy</b>
+## Install
 
-### <a name="install">Install</a>
+First step, clone the repo and the submodule
+
+`git clone --recurse-submodules https://github.com/ivomarvan/pywhycon.git`
 
 You have to install the package from your **active python environment**.
 
-Depending on your environment, you may need to enter something like
+```bash
+python3 -m venv whycon
+source whycon/bin/activate
+pip install numpy pybind11 pkgconfig
+pip install opencv-python
+```
 
-`conda activate _your_python_environment_name_` 
+## Install dependecies
 
-or 
+```bash
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install build-essential cmake git pkg-config libjpeg-dev libtiff-dev libpng-dev
+sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
+sudo apt-get install libxvidcore-dev libx264-dev libgtk-3-dev
+sudo apt-get install libatlas-base-dev gfortran python3-dev
+sudo apt-get install build-essential cmake git
+sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+sudo apt-get install python3-dev python3-numpy libtbb2 libtbb-dev libdc1394-22-dev
+sudo apt-get install libjpeg-dev libpng-dev libtiff-dev libopenexr-dev libatlas-base-dev gfortran
+sudo apt-get install libhdf5-dev libhdf5-103
+sudo apt-get install pybind11-dev
+sudo apt-get install libopencv-dev
+```
 
-`workon _your_python_environment_name_`.
-
-
-#### Makefile
+## Makefile
 
 Compile and linking module to **./bin/whycon.so**.
 
 (It also compiles the _Whycon Core library_.)
 
-    make
+```bash
+cd whycon_core
+make all -d
+cd ..
+make all -d
+```
 
-#### setup.py
+## setup.py
 
-    ./setup.py install
+`python3 setup.py install`
 
 (It calls the make [see above] and installs the whycon package in the current python environment.)
 
-
-#### Pip
-
-    pip install whycon
-
 ## Examples
 
-Examples are in the _usecases_ directory in the <a href="https://github.com/ivomarvan/pywhycon">repo on GitHub</a>.
+Examples are in the _usecases_ directory :
+If you are using a webcam :
+`python3 camera_test.py`
 
-#### show_help.py
+If you are using a depthai camera :
+`python3 depthai_test.py`
+
+### show_help.py
 
 It only tests that the module was installed successfully. It prints the help message of the module.
+`python3 show_help.py`
 
-#### camera_test.py
+### autocalibration_test.py
 
-Turn on the USB webcam and see what it sees. 
-If Whycon-markers are found in the image, they will be highlighted 
-and their found properties will be written to the console.
+Automatic calibration of space transformation parameters by monitoring
+four WhyCon markers arranged in a square (with the configured length of its side).
 
-#### autocalibration_test.py
-
-Automatic calibration of space transformation parameters by monitoring 
-four WhyCon markers arranged in a square 
-(with the configured length of its side).
-
-###### web_camera.py  
-
-Auxiliary object, camera abstraction.
-(Searches for the first unshaded camera.)
-
-###### window.py
-
-Auxiliary object, Screen window abstraction.
-
-
-#### Whycon core library as a submodule
+### Whycon core library as a submodule
 
 The Whycon core library is a git submodule of this repository.
 
-If you do not have a _whycon_core_ directory in the root directory, enter
+If you do not have a _whycon_core_ directory in the root directory, enter :
 
-    git submodule init
-    git submodule update
+```bash
+git submodule init
+git submodule update
+```
 
+## Whycon Core library
 
-### <a name="whycon_core">Whycon Core library</a>
-The package (pywhycon) is a wrapper of the <a href="https://github.com/ivomarvan/whycon_core">Whycon core library</a>. 
+The package (pywhycon) is a wrapper of the [Whycon core library]("https://github.com/LapinCodeur/whycon_core").
 
 **For citations of articles, contacts to the original author, please see these pages. You will also find citations of projects that contributed to the development of the Whycon.**
-
-<hr>
-
