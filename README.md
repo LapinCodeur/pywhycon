@@ -85,10 +85,17 @@ If you are using a depthai camera :
 It only tests that the module was installed successfully. It prints the help message of the module.
 `python3 show_help.py`
 
-### autocalibration_test.py
+### autocalibration_test.py and depthai_autocalibration_test.py
 
 Automatic calibration of space transformation parameters by monitoring
 four WhyCon markers arranged in a square (with the configured length of its side).
+Print whycon_calib.pdf, cut the four tags and arrange them.
+You can specify path to the calibration file when using : depthai_autocalibration_test.py.
+```bash
+depthai_autocalibration_test.py --help
+usage: depthai_autocalibration_test.py [-h] [--set_cam_calib_path SET_CAM_CALIB_PATH] [--set_space_calib_path_in SET_SPACE_CALIB_PATH_IN]
+                                       [--set_space_calib_path_out SET_SPACE_CALIB_PATH_OUT]
+```
 
 ### Whycon core library as a submodule
 
