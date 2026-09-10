@@ -1,11 +1,11 @@
 # pywhycon ![Whycon tag with ID](./whycon-code.jpg)
 
-Python wrapper for Whycon. This is a forked of [pywhycon](https://github.com/ivomarvan/pywhycon).
+Python wrapper for Whycon. This is a fork of [pywhycon](https://github.com/ivomarvan/pywhycon).
 I forked the project to add the modification from [Andrew123098](https://github.com/ivomarvan/pywhycon/issues/2) and update the [core](https://github.com/ivomarvan/whycon_core) with some of the update from the original [repository](https://github.com/jiriUlr/whycon-ros).
 
 ## Whycon is precise, efficient and low-cost localization system
 
-_WhyCon_ is a version of a vision-based localization system that can be used with low-cost web cameras, and achieves millimiter precision with very high performance.
+_WhyCon_ is a version of a vision-based localization system that can be used with low-cost web cameras, and achieves millimeter precision with very high performance.
 The system is capable of efficient real-time detection and precise position estimation of several circular markers in a video stream. 
 It can be used both off-line, as a source of ground-truth for robotics experiments, or on-line as a component of robotic systems that require real-time, precise position estimation.
 _WhyCon_ is meant as an alternative to widely used and expensive localization systems. It is fully open-source.
@@ -14,8 +14,8 @@ _WhyCon-orig_ is WhyCon's original, minimalistic version that was supposed to be
 ## Dependencies
 
 - **OpenCV**
-- **Whycon Core library** - see bellow
-- **pkconfig** - only for module building
+- **Whycon Core library** - see below
+- **pkgconfig** - only for module building
 - **pybind11** - only for module building
 - **numpy**
 
@@ -23,7 +23,7 @@ _WhyCon-orig_ is WhyCon's original, minimalistic version that was supposed to be
 
 First step, clone the repo and the submodule
 
-`git clone --recurse-submodules https://github.com/ivomarvan/pywhycon.git`
+`git clone --recurse-submodules https://github.com/LapinCodeur/pywhycon.git`
 
 You have to install the package from your **active python environment**.
 
@@ -31,10 +31,14 @@ You have to install the package from your **active python environment**.
 python3 -m venv whycon
 source whycon/bin/activate
 pip install numpy pybind11 pkgconfig
-pip install opencv-python
+pip install opencv-contrib-python
 ```
 
-## Install dependecies
+Use `opencv-contrib-python`, not `opencv-python` — both install into the same
+`cv2/` directory, so mixing them leaves a broken `cv2`. This affects only the
+Python side; the native build links system OpenCV via pkg-config.
+
+## Install system dependencies
 
 ```bash
 sudo apt-get update
@@ -43,9 +47,8 @@ sudo apt-get install build-essential cmake git pkg-config libjpeg-dev libtiff-de
 sudo apt-get install libavcodec-dev libavformat-dev libswscale-dev libv4l-dev
 sudo apt-get install libxvidcore-dev libx264-dev libgtk-3-dev
 sudo apt-get install libatlas-base-dev gfortran python3-dev
-sudo apt-get install build-essential cmake git
 sudo apt-get install libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
-sudo apt-get install python3-dev python3-numpy libtbb2 libtbb-dev libdc1394-22-dev
+sudo apt-get install python3-dev python3-numpy libtbb-dev libdc1394-dev
 sudo apt-get install libjpeg-dev libpng-dev libtiff-dev libopenexr-dev libatlas-base-dev gfortran
 sudo apt-get install libhdf5-dev libhdf5-103
 sudo apt-get install pybind11-dev
@@ -110,6 +113,6 @@ git submodule update
 
 ## Whycon Core library
 
-The package (pywhycon) is a wrapper of the [Whycon core library]("https://github.com/LapinCodeur/whycon_core").
+The package (pywhycon) is a wrapper of the [Whycon core library](https://github.com/LapinCodeur/whycon_core).
 
 **For citations of articles, contacts to the original author, please see these pages. You will also find citations of projects that contributed to the development of the Whycon.**

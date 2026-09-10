@@ -31,8 +31,25 @@ class OpenCV_params:
             self._pkg_config_name = found_paskages[0][0]
             os.environ['PKG_CONFIG_PATH'] = PKG_CONFIG_PATH
             self._pkg_config_path = PKG_CONFIG_PATH
-            self._cflags = pkgconfig.cflags(self._pkg_config_name)
-            self._libs = pkgconfig.libs(self._pkg_config_name)
+        else:
+            # No .pc file near cv2 (cv2 came from a pip wheel, which ships no
+            # pkg-config metadata). The upward search stops at $HOME, so it can
+            # never reach a system opencv4.pc under /usr/lib. Ask pkg-config
+            # directly for the well-known names on its default search path.
+            self._pkg_config_name = None
+            for candidate in ('opencv4', 'opencv'):
+                if pkgconfig.exists(candidate):
+                    self._pkg_config_name = candidate
+                    break
+            if self._pkg_config_name is None:
+                raise RuntimeError(
+                    "OpenCV_params: could not locate OpenCV by directory search "
+                    "nor via pkg-config (tried 'opencv4', 'opencv'). "
+                    "Is libopencv-dev (or equivalent) installed?"
+                )
+            self._pkg_config_path = os.environ.get('PKG_CONFIG_PATH', '')
+        self._cflags = pkgconfig.cflags(self._pkg_config_name)
+        self._libs = pkgconfig.libs(self._pkg_config_name)
     
     def cflags(self) -> str:
         return self._cflags
